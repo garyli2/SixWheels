@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=six-wheels
+Exec=dev.garyli.SixWheels
+Icon=dev.garyli.SixWheels
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true

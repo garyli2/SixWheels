@@ -1,0 +1,6 @@
+data/dev.garyli.SixWheels.desktop.in
+data/dev.garyli.SixWheels.appdata.xml.in
+data/dev.garyli.SixWheels.gschema.xml
+data/window.ui
+src/main.ts
+src/window.ts
