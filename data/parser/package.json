@@ -1,0 +1,18 @@
+{
+  "name": "catalog-parser",
+  "version": "1.0.0",
+  "main": "convertCatalog.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.5.4"
+  },
+  "type": "module",
+  "dependencies": {
+    "csv-parse": "^5.5.6"
+  }
+}

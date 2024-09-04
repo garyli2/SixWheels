@@ -15,6 +15,7 @@ module.exports = {
     rules: {
         '@typescript-eslint/restrict-template-expressions': ['error', { allowNullish: true, },],
         'prettier/prettier': 'error',
+        '@typescript-eslint/unbound-method': 'off',
     },
     plugins: ['@typescript-eslint', 'prettier'],
     root: true,

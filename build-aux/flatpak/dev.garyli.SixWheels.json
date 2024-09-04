@@ -1,27 +1,25 @@
 {
-    "id" : "dev.garyli.SixWheels",
-    "runtime" : "org.gnome.Platform",
-    "runtime-version" : "master",
-    "sdk" : "org.gnome.Sdk",
-    "sdk-extensions" : [
+    "id": "dev.garyli.SixWheels",
+    "runtime": "org.gnome.Platform",
+    "runtime-version": "46",
+    "sdk": "org.gnome.Sdk",
+    "sdk-extensions": [
         "org.freedesktop.Sdk.Extension.node20",
         "org.freedesktop.Sdk.Extension.typescript"
     ],
-    "tags" : [
-        "nightly"
-    ],
-    "build-options" : {
-        "append-path" : "/usr/lib/sdk/node20/bin:/usr/lib/sdk/typescript/bin"
+    "tags": ["nightly"],
+    "build-options": {
+        "append-path": "/usr/lib/sdk/node20/bin:/usr/lib/sdk/typescript/bin"
     },
-    "command" : "dev.garyli.SixWheels",
-    "finish-args" : [
+    "command": "dev.garyli.SixWheels",
+    "finish-args": [
         "--share=ipc",
         "--device=dri",
         "--socket=wayland",
         "--socket=fallback-x11",
-        "--env=GJS_DISABLE_JIT=1"
+        "--share=network"
     ],
-    "cleanup" : [
+    "cleanup": [
         "/include",
         "/lib/pkgconfig",
         "/man",
@@ -32,14 +30,54 @@
         "*.la",
         "*.a"
     ],
-    "modules" : [
+    "modules": [
         {
-            "name" : "six-wheels",
-            "buildsystem" : "meson",
-            "sources" : [
+            "name": "protobuf",
+            "buildsystem": "autotools",
+            "config-opts": ["DIST_LANG=cpp"],
+            "cleanup": [
+                "/bin/protoc*",
+                "/lib/libprotoc*",
+                "/lib/libprotobuf-lite*"
+            ],
+            "sources": [
                 {
-                    "type" : "git",
-                    "url" : "."
+                    "type": "archive",
+                    "url": "https://github.com/protocolbuffers/protobuf/releases/download/v3.17.3/protobuf-all-3.17.3.tar.gz",
+                    "sha256": "77ad26d3f65222fd96ccc18b055632b0bfedf295cb748b712a98ba1ac0b704b2"
+                }
+            ]
+        },
+        {
+            "name": "protobuf-c",
+            "buildsystem": "autotools",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/protobuf-c/protobuf-c/releases/download/v1.5.0/protobuf-c-1.5.0.tar.gz",
+                    "sha256": "7b404c63361ed35b3667aec75cc37b54298d56dd2bcf369de3373212cc06fd98"
+                }
+            ]
+        },
+        {
+            "name": "libshumate",
+            "buildsystem": "meson",
+            "config-opts": ["-Dgtk_doc=false"],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/libshumate/",
+                    "branch": "main"
+                }
+            ]
+        },
+        {
+            "name": "six-wheels",
+            "buildsystem": "meson",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "."
                 }
             ]
         }

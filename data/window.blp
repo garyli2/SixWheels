@@ -1,0 +1,14 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $SixWheelsWindow: Adw.Window {
+  title: _("6Wheels");
+  default-height: 700;
+  default-width: 900;
+
+  content: Adw.NavigationView navigation_view {
+    $NetworksListPage networks_list_page {
+      chosen-network => $push_new_network();
+    }
+  };
+}

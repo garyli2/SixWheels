@@ -1,0 +1,138 @@
+using Gtk 4.0;
+
+template $StationInfoMarker {
+  Button marker_btn {
+    icon-name: "pin-location-symbolic";
+
+    styles [
+      "transparent-background"
+    ]
+  }
+
+  Popover popover {
+    Box {
+      orientation: vertical;
+      spacing: 5;
+      width-request: 150;
+
+      Label {
+        label: bind template.name;
+
+        styles [
+          "station-name"
+        ]
+      }
+
+      Grid info {
+        margin-top: 5;
+        halign: center;
+        column-spacing: 5;
+        // free bikes, always displayed
+        Label {
+          label: _("Free Bikes");
+
+          layout {
+            row: 0;
+            column: 0;
+          }
+        }
+
+        Label {
+          styles [
+            "station-info"
+          ]
+
+          label: bind template.free-bikes;
+
+          layout {
+            row: 0;
+            column: 1;
+          }
+        }
+
+        Image bikes_icon {
+          icon-name: bind template.free-bikes-icon-name;
+
+          layout {
+            row: 0;
+            column: 2;
+          }
+        }
+
+        // empty slots, always displayed
+        Label {
+          label: _("Empty Slots");
+
+          layout {
+            row: 1;
+            column: 0;
+          }
+        }
+
+        Label {
+          styles [
+            "station-info"
+          ]
+
+          label: bind template.empty-slots;
+
+          layout {
+            row: 1;
+            column: 1;
+          }
+        }
+
+        Image slots_icon {
+          icon-name: bind template.empty-slots-icon-name;
+
+          layout {
+            row: 1;
+            column: 2;
+          }
+        }
+
+        // e-bikes, conditionally displayed
+        // Label ebike_label {
+        //   label: _("Free E-bikes");
+
+        //   layout {
+        //     row: 2;
+        //     column: 0;
+        //   }
+        // }
+
+        // Label ebike_number_label {
+        //   styles [
+        //     "station-info"
+        //   ]
+
+        //   label: bind template.free-ebikes;
+
+        //   layout {
+        //     row: 2;
+        //     column: 1;
+        //   }
+        // }
+
+        // Image ebike_icon {
+        //   icon-name: bind template.free-ebikes-icon-name;
+
+        //   styles [
+        //     "success"
+        //   ]
+
+        //   layout {
+        //     row: 2;
+        //     column: 2;
+        //   }
+        // }
+      }
+
+      // timestamp
+      Label {
+        label: bind template.timestamp;
+        halign: end;
+      }
+    }
+  }
+}

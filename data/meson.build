@@ -52,12 +52,26 @@ if compile_schemas.found()
        args: ['--strict', '--dry-run', meson.current_source_dir()])
 endif
 
+blueprints = custom_target('blueprints',
+  input: files(
+    'gtk/help-overlay.blp',
+    'window.blp',
+    'network-page.blp',
+    'networks-list-item.blp',
+    'networks-list-page.blp',
+    'station-info-marker.blp'
+  ),
+  output: '.',
+  command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
+)
+
 data_res = gnome.compile_resources(
   'dev.garyli.SixWheels.data',
   'dev.garyli.SixWheels.data.gresource.xml',
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,
+  dependencies: blueprints,
 )
 
 subdir('icons')

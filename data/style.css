@@ -1,0 +1,32 @@
+.transparent-background {
+  background: transparent;
+}
+
+.station-name {
+  font-weight: bold;
+}
+
+.station-info {
+  margin: 5px;
+}
+
+.available-icon {
+  color: green;
+}
+
+.partially-available-icon {
+  color: orange;
+}
+
+.not-available-icon {
+  color: red;
+}
+
+.network-title {
+  font-weight: 600;
+	font-size: 20px;
+}
+
+.network-subtitle {
+	font-size: 16px;
+}

@@ -3,5 +3,10 @@
   <gresource prefix="/dev/garyli/SixWheels/js">
     <file>main.js</file>
     <file>window.js</file>
+    <file>network-information.js</file>
+    <file>network-page.js</file>
+    <file>networks-list-page.js</file>
+    <file>station-info-marker.js</file>
+    <file>utils.js</file>
   </gresource>
 </gresources>

@@ -1,0 +1,27 @@
+using Gtk 4.0;
+
+template ListItem {
+  child: Box {
+    orientation: vertical;
+
+    Label {
+      label: bind template.item as <$NetworkInformation>.name;
+
+      styles [
+        "title-3"
+      ]
+
+      margin-start: 10;
+    }
+
+    Label {
+      label: bind template.item as <$NetworkInformation>.location;
+
+      styles [
+        "caption"
+      ]
+
+      margin-start: 10;
+    }
+  };
+}

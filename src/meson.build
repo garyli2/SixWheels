@@ -3,6 +3,11 @@ gnome = import('gnome')
 sources = files(
   'main.ts',
   'window.ts',
+  'utils.ts',
+  'station-info-marker.ts',
+  'networks-list-page.ts',
+  'network-page.ts',
+  'network-information.ts',
 )
 
 tsc_out = meson.project_build_root() / 'tsc-out'

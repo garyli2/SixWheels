@@ -3,5 +3,20 @@
   <gresource prefix="/dev/garyli/SixWheels">
     <file preprocess="xml-stripblanks">window.ui</file>
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
+    <file>network-page.ui</file>
+    <file>networks-list-item.ui</file>
+    <file>networks-list-page.ui</file>
+    <file>station-info-marker.ui</file>
+    <file alias="catalog.json">parser/catalog.json</file>
+    <file>style.css</file>
+  </gresource>
+
+  <gresource prefix="/dev/garyli/SixWheels/icons/16x16/actions">
+    <file alias="check-round-outline2-symbolic.svg">icons/hicolor/symbolic/apps/check-round-outline2-symbolic.svg</file>
+    <file alias="cross-large-circle-outline-symbolic.svg">icons/hicolor/symbolic/apps/cross-large-circle-outline-symbolic.svg</file>
+    <file alias="map-symbolic.svg">icons/hicolor/symbolic/apps/map-symbolic.svg</file>
+    <file alias="pin-location-symbolic.svg">icons/hicolor/symbolic/apps/pin-location-symbolic.svg</file>
+    <file alias="profit-symbolic.svg">icons/hicolor/symbolic/apps/profit-symbolic.svg</file>
+    <file alias="cycling-symbolic.svg">icons/hicolor/symbolic/apps/cycling-symbolic.svg</file>
   </gresource>
 </gresources>

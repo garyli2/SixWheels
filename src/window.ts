@@ -1,99 +1,64 @@
-import Adw from 'gi://Adw';
-import Gio from 'gi://Gio';
-import GLib from 'gi://GLib';
-import GObject from 'gi://GObject';
-import Gtk from 'gi://Gtk?version=4.0';
+import Adw from "gi://Adw";
+import Shumate from "gi://Shumate";
+import GObject from "gi://GObject?version=2.0";
 
-/**
- * Windows are the top-level widgets in our application.
- * They hold all of the other widgets, and when a window is closed
- * all of them are destroyed (unless `hide-on-close` is set).
- *
- * For most cases, you will want to use an AdwApplicationWindow
- * as the parent class for your windows. GtkApplicationWindow and
- * AdwApplicationWindow both integrate with your Application class,
- * getting information about the application like the app ID and tying
- * the window and application's lifecycles together. In addition,
- * both of these classes allow you to directly add actions to them.
- * These actions will be prefixed with `win`.
- *
- * For more information on windows, see:
- *  - https://docs.gtk.org/gtk4/class.Window.html
- *  - https://docs.gtk.org/gtk4/class.ApplicationWindow.html
- *  - https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.ApplicationWindow.html
- */
-export class Window extends Adw.ApplicationWindow {
-    private _toastOverlay!: Adw.ToastOverlay;
+import { NetworksListPage } from "./networks-list-page.js";
+import type NetworkInformation from "./network-information.js";
+import { NetworkPage } from "./network-page.js";
+
+// @ts-expect-error gi-types
+GObject.type_ensure(Shumate.SimpleMap);
+// @ts-expect-error gi-types
+GObject.type_ensure(NetworksListPage);
+// @ts-expect-error gi-types
+GObject.type_ensure(NetworkPage);
+// @ts-expect-error gi-types
+GObject.type_ensure(Shumate.MarkerLayer);
+
+export class SixWheelsWindow extends Adw.Window {
+    _networks_list_page!: NetworksListPage;
+    _navigation_view!: Adw.NavigationView;
 
     static {
-        /**
-         * Here we use a template. We define the resource path to the .ui file
-         * and the `id` of the objects we want to be able to access programmatically.
-         *
-         * For a detailed guide on how to use templates in GTK4,
-         * see https://rmnvgr.gitlab.io/gtk4-gjs-book/application/ui-templates-composite-widgets/
-         *
-         * **IMPORTANT**: Above where you see `private _toastOverlay!: Adw.ToastOverlay;`
-         * is where we actually declare the field. Template children are handled by GJS,
-         * but we need to tell TypeScript that they exist. We prepend the underscore
-         * so we match the name of the field that GJS will generate, and add
-         * the exclamation point to tell the typescript compiler where to look.
-         */
         GObject.registerClass(
             {
-                Template:
-                    'resource:///dev/garyli/SixWheels/window.ui',
-                InternalChildren: ['toastOverlay'],
+                GTypeName: "SixWheelsWindow",
+                Properties: {
+                    "selected-network": GObject.ParamSpec.object(
+                        "selected-network",
+                        "Selected Network",
+                        "The user selected network to view.",
+                        // @ts-expect-error gi-types
+                        GObject.ParamFlags.READWRITE,
+                        GObject.Object
+                    ),
+                    "network-selected": GObject.ParamSpec.boolean(
+                        "network-selected",
+                        "Network Selected",
+                        "Whether the user has selected a network.",
+                        GObject.ParamFlags.READWRITE,
+                        false
+                    ),
+                },
+                Template: "resource:///dev/garyli/SixWheels/window.ui",
+                InternalChildren: ["networks_list_page", "navigation_view"],
             },
             this
         );
-
-        // Widgets allow you to directly add shortcuts to them when subclassing
-        Gtk.Widget.add_shortcut(
-            new Gtk.Shortcut({
-                action: new Gtk.NamedAction({ action_name: 'window.close' }),
-                trigger: Gtk.ShortcutTrigger.parse_string('<Control>w'),
-            })
-        );
     }
 
-    constructor(params?: Partial<Adw.ApplicationWindow.ConstructorProperties>) {
+    constructor(params?: Partial<Adw.ApplicationWindow.ConstructorProps>) {
         super(params);
+    }
 
-        /**
-         * Actions can also have parameters. In order to allow developers
-         * to choose different types of parameters for their application,
-         * we need to use something called a `GVariant`. When creating the
-         * application we pass a string that denotes the type of the variant.
-         *
-         * For more information on variants, see:
-         *  - https://docs.gtk.org/glib/struct.Variant.html
-         *  - https://docs.gtk.org/glib/struct.VariantType.html
-         */
-        const openLink = new Gio.SimpleAction({
-            name: 'open-link',
-            parameter_type: GLib.VariantType.new('s'),
+    push_new_network(
+        _networks_list_page: NetworksListPage,
+        chosen_network: typeof NetworkInformation
+    ) {
+        const network_page = new NetworkPage({
+            "selected-network": chosen_network,
+            title: chosen_network.name,
         });
-
-        openLink.connect('activate', (_source, param) => {
-            if (param) {
-                // When using a variant parameter, we need to get the type we expect
-                const link = param.get_string()[0];
-
-                const launcher = new Gtk.UriLauncher({ uri: link });
-
-                launcher
-                    .launch(this, null)
-                    .then(() => {
-                        const toast = new Adw.Toast({
-                            title: _('Opened link'),
-                        });
-                        this._toastOverlay.add_toast(toast);
-                    })
-                    .catch(console.error);
-            }
-        });
-
-        this.add_action(openLink);
+        this._navigation_view.push(network_page);
     }
 }

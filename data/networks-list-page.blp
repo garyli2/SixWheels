@@ -1,0 +1,105 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $NetworksListPage {
+  tag: "network_list_page";
+  title: "Select a network";
+
+  Box {
+    orientation: vertical;
+    spacing: 5;
+
+    Adw.HeaderBar {
+      [end]
+      Box {
+        spacing: 10;
+
+        ToggleButton search_toggle {
+          icon-name: "edit-find";
+          clicked => $on_search_entry_click_grab_focus();
+        }
+
+        MenuButton {
+          icon-name: "open-menu-symbolic";
+          primary: true;
+          menu-model: window_menu;
+        }
+      }
+    }
+
+    Box spinner_box {
+      halign: center;
+      visible: bind template.loading;
+      spacing: 10;
+
+      Spinner {
+        spinning: true;
+        height-request: 32;
+        width-request: 32;
+        vexpand: true;
+      }
+
+      Label {
+        label: _("Loading bike networks");
+      }
+    }
+
+    Box {
+      spacing: 5;
+      halign: fill;
+      visible: bind search_toggle.active;
+      margin-start: 50;
+      margin-end: 50;
+
+      SearchEntry search_entry {
+        hexpand: true;
+        placeholder-text: _("Search for cities or network names");
+        search-changed => $update_search_text();
+      }
+    }
+
+    ScrolledWindow scrolled_window {
+      hexpand: true;
+      vexpand: true;
+      hscrollbar-policy: never;
+      propagate-natural-height: true;
+      has-frame: false;
+      valign: start;
+      visible: bind template.loading inverted;
+
+      ListView networks_list_view {
+        vexpand: true;
+        margin-start: 50;
+        margin-end: 50;
+        show-separators: true;
+
+        factory: BuilderListItemFactory {
+          resource: "/dev/garyli/SixWheels/networks-list-item.ui";
+        };
+
+        styles [
+          "boxed-list"
+        ]
+      }
+    }
+
+    ActionBar {
+      [end]
+      Button next_button {
+        icon-name: "go-next";
+        label: "Next";
+        sensitive: bind template.network_selected;
+        clicked => $emit_chosen_network();
+      }
+    }
+  }
+}
+
+menu window_menu {
+  section {
+    item {
+      label: _("About App");
+      action: "app.about";
+    }
+  }
+}

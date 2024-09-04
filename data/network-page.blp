@@ -1,0 +1,79 @@
+using Gtk 4.0;
+using Adw 1;
+using Shumate 1.0;
+
+template $NetworkPage {
+  tag: "network_page";
+
+  Box {
+    orientation: vertical;
+
+    Adw.HeaderBar header_bar {
+      [start]
+      Label {
+        label: bind template.title;
+      }
+
+      title-widget: Adw.ViewSwitcher switcher_title {
+        stack: stack;
+        policy: wide;
+      };
+
+      Button {
+        icon-name: "view-refresh-symbolic";
+        clicked => $refreshStationStatus();
+      }
+
+      [end]
+      MenuButton {
+        icon-name: "open-menu-symbolic";
+        primary: true;
+        menu-model: window_menu;
+      }
+    }
+
+    Adw.ViewStack stack {
+      vexpand: true;
+
+      Adw.ViewStackPage map_page {
+        name: "mapPage";
+        title: _("Map");
+        icon-name: "map-symbolic";
+        use-underline: true;
+
+        child: Box {
+          orientation: vertical;
+          hexpand: true;
+
+          Shumate.SimpleMap map_widget {
+            hexpand: true;
+            vexpand: true;
+          }
+        };
+      }
+
+      Adw.ViewStackPage stats_page {
+        name: "statsPage";
+        title: _("Network");
+        icon-name: "cycling-symbolic";
+        use-underline: true;
+
+        child: Gtk.ListBox stats_group {
+        };
+      }
+    }
+
+    Adw.ViewSwitcherBar switcher_bar {
+      stack: stack;
+    }
+  }
+}
+
+menu window_menu {
+  section {
+    item {
+      label: _("About App");
+      action: "app.about";
+    }
+  }
+}
