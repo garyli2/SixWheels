@@ -5,8 +5,6 @@ class NetworkInformation extends GObject.Object {
     url!: string;
     country!: string;
     location!: string;
-    lat!: number;
-    lon!: number;
 
     static {
         GObject.registerClass(
@@ -20,12 +18,6 @@ class NetworkInformation extends GObject.Object {
                         GObject.ParamFlags.READWRITE,
                         "Unknown network name"
                     ),
-                    // company: GObject.ParamSpec.jsobject(
-                    //     "company",
-                    //     "Company",
-                    //     "An array of companies responsible for this network",
-                    //     GObject.ParamFlags.READWRITE
-                    // ),
                     url: GObject.ParamSpec.string(
                         "url",
                         "URL",
@@ -46,24 +38,6 @@ class NetworkInformation extends GObject.Object {
                         "The location of the network.",
                         GObject.ParamFlags.READWRITE,
                         "Unknown location"
-                    ),
-                    lat: GObject.ParamSpec.double(
-                        "lat",
-                        "Latitude",
-                        "The latitude of the network",
-                        GObject.ParamFlags.READWRITE,
-                        Number.MIN_SAFE_INTEGER,
-                        Number.MAX_SAFE_INTEGER,
-                        0.0
-                    ),
-                    lon: GObject.ParamSpec.double(
-                        "lon",
-                        "Longitude",
-                        "The longitude of the network",
-                        GObject.ParamFlags.READWRITE,
-                        Number.MIN_SAFE_INTEGER,
-                        Number.MAX_SAFE_INTEGER,
-                        0.0
                     ),
                 },
             },
