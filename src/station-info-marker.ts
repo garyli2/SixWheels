@@ -146,7 +146,11 @@ export class StationInfoMarker extends Gtk.Box {
                 ? "available-icon"
                 : "not-available-icon"
         );
-        this.timestamp = new Date().toLocaleDateString();
+        this.timestamp = new Date().toLocaleTimeString(undefined, {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+        });
 
         // update pin colour based on availability
         this.add_css_class(
