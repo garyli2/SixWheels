@@ -38,7 +38,7 @@ export class NetworkPage extends Adw.NavigationPage {
                     "network-data": GObject.ParamSpec.jsobject(
                         "network-data",
                         "Network Data",
-                        "Map of station information about a bike network.",
+                        "Map of station information about a shared mobility network.",
                         GObject.ParamFlags.READWRITE
                     ),
                     "marker-layer": GObject.ParamSpec.object(
@@ -71,7 +71,7 @@ export class NetworkPage extends Adw.NavigationPage {
 
     private selected_network!: NetworkInformation;
     private station_info_map = new Map<string, Station>(); // concrete immutable information (e.g lat/lon, name)
-    private station_status_map = new Map<string, StationStatus>(); // temporal information (e.g # of available bikes)
+    private station_status_map = new Map<string, StationStatus>(); // temporal information (e.g # of available vehicles)
 
     constructor(constructProperties = {}) {
         super(constructProperties);

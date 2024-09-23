@@ -27,9 +27,9 @@ template $StationInfoMarker {
         margin-top: 5;
         halign: center;
         column-spacing: 5;
-        // free bikes, always displayed
+        // free vehicles, always displayed
         Label {
-          label: _("Free Bikes");
+          label: _("Free Vehicles");
 
           layout {
             row: 0;
@@ -42,7 +42,7 @@ template $StationInfoMarker {
             "station-info"
           ]
 
-          label: bind template.free-bikes;
+          label: bind template.free-vehicles;
 
           layout {
             row: 0;
@@ -50,8 +50,8 @@ template $StationInfoMarker {
           }
         }
 
-        Image bikes_icon {
-          icon-name: bind template.free-bikes-icon-name;
+        Image vehicles_icon {
+          icon-name: bind template.free-vehicles-icon-name;
 
           layout {
             row: 0;

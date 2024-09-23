@@ -10,14 +10,14 @@ export class StationInfoMarker extends Gtk.Box {
     lat!: number;
     lon!: number;
     timestamp!: string;
-    free_bikes!: string;
-    free_bikes_icon_name!: string;
+    free_vehicles!: string;
+    free_vehicles_icon_name!: string;
     empty_slots!: string;
     empty_slots_icon_name!: string;
 
     private _popover!: Gtk.Popover;
     private _marker_btn!: Gtk.Button;
-    private _bikes_icon!: Gtk.Image;
+    private _vehicles_icon!: Gtk.Image;
     private _slots_icon!: Gtk.Image;
 
     static {
@@ -57,17 +57,17 @@ export class StationInfoMarker extends Gtk.Box {
                         GObject.ParamFlags.READWRITE,
                         ""
                     ),
-                    "free-bikes": GObject.ParamSpec.string(
-                        "free-bikes",
-                        "Free Bikes",
-                        "The number of bikes available in this station.",
+                    "free-vehicles": GObject.ParamSpec.string(
+                        "free-vehicles",
+                        "Free Vehicles",
+                        "The number of vehicles available in this station.",
                         GObject.ParamFlags.READWRITE,
                         ""
                     ),
-                    "free-bikes-icon-name": GObject.ParamSpec.string(
-                        "free-bikes-icon-name",
-                        "Free Bikes Icon name",
-                        "The icon name for free bikes.",
+                    "free-vehicles-icon-name": GObject.ParamSpec.string(
+                        "free-vehicles-icon-name",
+                        "Free Vehicles Icon name",
+                        "The icon name for free vehicles.",
                         GObject.ParamFlags.READWRITE,
                         ""
                     ),
@@ -92,7 +92,7 @@ export class StationInfoMarker extends Gtk.Box {
                     "popover",
                     "marker_btn",
                     "slots_icon",
-                    "bikes_icon",
+                    "vehicles_icon",
                 ],
             },
             this
@@ -128,12 +128,12 @@ export class StationInfoMarker extends Gtk.Box {
     updateFromJson(stationStatus: Station) {
         // changed in v3 to num_vehicles_available
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, prettier/prettier
-        this.free_bikes = stationStatus.num_bikes_available?.toString() ?? stationStatus.num_vehicles_available?.toString() ?? "0";
-        this.free_bikes_icon_name = isAvailable(this.free_bikes)
+        this.free_vehicles = stationStatus.num_bikes_available?.toString() ?? stationStatus.num_vehicles_available?.toString() ?? "0";
+        this.free_vehicles_icon_name = isAvailable(this.free_vehicles)
             ? SUCCESS_ICON_NAME
             : CROSS_ICON_NAME;
-        this._bikes_icon.add_css_class(
-            isAvailable(this.free_bikes)
+        this._vehicles_icon.add_css_class(
+            isAvailable(this.free_vehicles)
                 ? "available-icon"
                 : "not-available-icon"
         );
@@ -154,9 +154,10 @@ export class StationInfoMarker extends Gtk.Box {
 
         // update pin colour based on availability
         this.add_css_class(
-            isAvailable(this.free_bikes) && isAvailable(this.empty_slots)
+            isAvailable(this.free_vehicles) && isAvailable(this.empty_slots)
                 ? "available-icon"
-                : isAvailable(this.free_bikes) || isAvailable(this.empty_slots)
+                : isAvailable(this.free_vehicles) ||
+                  isAvailable(this.empty_slots)
                 ? "partially-available-icon"
                 : "not-available-icon"
         );
