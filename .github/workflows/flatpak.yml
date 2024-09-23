@@ -22,3 +22,4 @@ jobs:
         bundle: sixwheels.flatpak
         manifest-path: build-aux/flatpak/dev.garyli.SixWheels.json
         cache-key: flatpak-builder-${{ github.sha }}
+        upload-artifact: true
