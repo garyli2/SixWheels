@@ -9,7 +9,8 @@
     ],
     "tags": ["nightly"],
     "build-options": {
-        "append-path": "/usr/lib/sdk/node20/bin:/usr/lib/sdk/typescript/bin"
+        "append-path": "/usr/lib/sdk/node20/bin:/usr/lib/sdk/typescript/bin",
+        "build-args": ["--share=network"]
     },
     "command": "dev.garyli.SixWheels",
     "finish-args": [
