@@ -28,7 +28,6 @@ export class NetworksListPage extends Adw.NavigationPage {
 
     private selected_network!: NetworkInformation;
     private network_selected!: boolean;
-    private loading!: boolean;
     private search_term!: string;
 
     static {
@@ -50,13 +49,6 @@ export class NetworksListPage extends Adw.NavigationPage {
                         "Whether the user has selected a network.",
                         GObject.ParamFlags.READWRITE,
                         false
-                    ),
-                    loading: GObject.ParamSpec.boolean(
-                        "loading",
-                        "Loading",
-                        "Whether the list is currently loading.",
-                        GObject.ParamFlags.READWRITE,
-                        true
                     ),
                     "search-term": GObject.ParamSpec.string(
                         "search-term",
@@ -120,11 +112,9 @@ export class NetworksListPage extends Adw.NavigationPage {
     }
 
     populateList() {
-        this.loading = true;
         this.read_networks_catalog()
             .then((catalog) => {
                 this.build_network_list(catalog);
-                this.loading = false;
             })
             .catch((e) => console.log(e));
     }

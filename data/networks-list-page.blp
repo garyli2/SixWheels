@@ -27,23 +27,6 @@ template $NetworksListPage {
       }
     }
 
-    Box spinner_box {
-      halign: center;
-      visible: bind template.loading;
-      spacing: 10;
-
-      Spinner {
-        spinning: true;
-        height-request: 32;
-        width-request: 32;
-        vexpand: true;
-      }
-
-      Label {
-        label: _("Loading bike networks");
-      }
-    }
-
     Box {
       spacing: 5;
       halign: fill;
@@ -65,7 +48,6 @@ template $NetworksListPage {
       propagate-natural-height: true;
       has-frame: false;
       valign: start;
-      visible: bind template.loading inverted;
 
       ListView networks_list_view {
         vexpand: true;
