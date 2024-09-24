@@ -48,3 +48,33 @@ export const convertTimestampToLocalTime = (timestamp: string) => {
 export const isAvailable = (str: string) => {
     return Number.parseInt(str) > 0;
 };
+
+export const humanize_name = (str: string) => {
+    return str.replaceAll("_", " ").trim();
+};
+
+const isLiteralObject = (a: unknown) => {
+    return !!a && a.constructor === Object;
+};
+
+export const flattenObj = (
+    flattenedObj: object,
+    parentAttribute: string | null,
+    curObj: object
+): void => {
+    if (!curObj) return;
+
+    Object.entries(curObj).forEach(([key, val]) => {
+        if (isLiteralObject(val)) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+            flattenObj(flattenedObj, key, val);
+        } else {
+            const newKey = parentAttribute
+                ? `${parentAttribute} -> ${key}`
+                : key;
+            // @ts-expect-error unknown
+            flattenedObj[newKey] =
+                typeof val !== "string" ? JSON.stringify(val) : val;
+        }
+    });
+};

@@ -3,7 +3,7 @@ import Adw from "gi://Adw";
 import Shumate from "gi://Shumate";
 import GObject from "gi://GObject";
 
-import { fetch } from "./utils.js";
+import { fetch, flattenObj, humanize_name } from "./utils.js";
 import { StationInfoMarker } from "./station-info-marker.js";
 import type NetworkInformation from "./network-information.js";
 
@@ -177,9 +177,12 @@ export class NetworkPage extends Adw.NavigationPage {
         const response = (await fetch(
             this.#system_information_url
         )) as SystemInformation;
-        Object.entries(response.data).forEach(([attribute_name, value]) => {
+
+        const flattenedObj = {};
+        flattenObj(flattenedObj, null, response.data);
+        Object.entries(flattenedObj).forEach(([attribute_name, value]) => {
             const row = new Adw.ActionRow({
-                title: attribute_name,
+                title: humanize_name(attribute_name),
                 subtitle: JSON.stringify(value),
                 cssClasses: ["property"],
             });
